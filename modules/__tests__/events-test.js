@@ -1,121 +1,218 @@
-/* React */
-import { render, unmountComponentAtNode } from 'react-dom'
-import Rtu      from 'react-dom/test-utils'
-import React    from 'react'
-/* Components to test */
-import Element  from '../components/Element.js';
-import Link     from '../components/Link.js';
-import events   from '../mixins/scroll-events.js';
-import animateScroll from '../mixins/animate-scroll.js';
+'use strict';
+
+var _reactDom = require('react-dom');
+
+var _testUtils = require('react-dom/test-utils');
+
+var _testUtils2 = _interopRequireDefault(_testUtils);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Element = require('../components/Element.js');
+
+var _Element2 = _interopRequireDefault(_Element);
+
+var _Link = require('../components/Link.js');
+
+var _Link2 = _interopRequireDefault(_Link);
+
+var _scrollEvents = require('../mixins/scroll-events.js');
+
+var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
+
+var _animateScroll = require('../mixins/animate-scroll.js');
+
+var _animateScroll2 = _interopRequireDefault(_animateScroll);
+
+var _expect = require('expect');
+
+var _expect2 = _interopRequireDefault(_expect);
+
+var _assert = require('assert');
+
+var _assert2 = _interopRequireDefault(_assert);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /* Test */
-import expect   from 'expect'
-import assert   from 'assert';
 
+/* Components to test */
+describe('Events', function () {
 
-describe('Events', () => {
+  var node = void 0;
+  var scrollDuration = 10;
 
-  let node;
-  let scrollDuration = 10;
-
-  let component =
-      <div>
-        <ul>
-          <li><Link to="test1" spy={true} smooth={true} duration={scrollDuration}>Test 1</Link></li>
-          <li><Link to="test2" spy={true} smooth={true} duration={scrollDuration}>Test 2</Link></li>
-          <li><Link to="test3" spy={true} smooth={true} duration={scrollDuration}>Test 3</Link></li>
-          <li><Link to="test4" spy={true} smooth={true} duration={scrollDuration}>Test 4</Link></li>
-          <li><Link to="test5" spy={true} smooth={true} duration={scrollDuration}>Test 5</Link></li>
-          <li><Link to="test6" spy={true} smooth={true} duration={scrollDuration}>Test 6</Link></li>
-        </ul>
-        <Element name="test1" className="element">test 1</Element>
-        <Element name="test2" className="element">test 2</Element>
-        <Element name="test3" className="element">test 3</Element>
-        <Element name="test4" className="element">test 4</Element>
-        <Element name="test5" className="element">test 5</Element>
-        <div id="test6" className="element">test 6</div>
-      </div>
+  var component = _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'ul',
+      null,
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _Link2.default,
+          { to: 'test1', spy: true, smooth: true, duration: scrollDuration },
+          'Test 1'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _Link2.default,
+          { to: 'test2', spy: true, smooth: true, duration: scrollDuration },
+          'Test 2'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _Link2.default,
+          { to: 'test3', spy: true, smooth: true, duration: scrollDuration },
+          'Test 3'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _Link2.default,
+          { to: 'test4', spy: true, smooth: true, duration: scrollDuration },
+          'Test 4'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _Link2.default,
+          { to: 'test5', spy: true, smooth: true, duration: scrollDuration },
+          'Test 5'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        _react2.default.createElement(
+          _Link2.default,
+          { to: 'test6', spy: true, smooth: true, duration: scrollDuration },
+          'Test 6'
+        )
+      )
+    ),
+    _react2.default.createElement(
+      _Element2.default,
+      { name: 'test1', className: 'element' },
+      'test 1'
+    ),
+    _react2.default.createElement(
+      _Element2.default,
+      { name: 'test2', className: 'element' },
+      'test 2'
+    ),
+    _react2.default.createElement(
+      _Element2.default,
+      { name: 'test3', className: 'element' },
+      'test 3'
+    ),
+    _react2.default.createElement(
+      _Element2.default,
+      { name: 'test4', className: 'element' },
+      'test 4'
+    ),
+    _react2.default.createElement(
+      _Element2.default,
+      { name: 'test5', className: 'element' },
+      'test 5'
+    ),
+    _react2.default.createElement(
+      'div',
+      { id: 'test6', className: 'element' },
+      'test 6'
+    )
+  );
 
   beforeEach(function () {
     node = document.createElement('div');
     document.body.innerHtml = "";
-    document.body.appendChild(node)
+    document.body.appendChild(node);
   });
 
-  afterEach(() => {
-    events.scrollEvent.remove('begin');
-    events.scrollEvent.remove('end');
-    unmountComponentAtNode(node);
+  afterEach(function () {
+    _scrollEvents2.default.scrollEvent.remove('begin');
+    _scrollEvents2.default.scrollEvent.remove('end');
+    (0, _reactDom.unmountComponentAtNode)(node);
     document.body.removeChild(node);
   });
 
-  it('direct link calls begin and end event', (done) => {
+  it('direct link calls begin and end event', function (done) {
 
-    render(component, node, () => {
+    (0, _reactDom.render)(component, node, function () {
 
-        var link = node.querySelectorAll('a')[5];
+      var link = node.querySelectorAll('a')[5];
 
-        var begin = (to, target) => {
-          expect(to).toEqual('test6');
-          expect(Rtu.isDOMComponent(target)).toEqual(true);
-        };
+      var begin = function begin(to, target) {
+        (0, _expect2.default)(to).toEqual('test6');
+        (0, _expect2.default)(_testUtils2.default.isDOMComponent(target)).toEqual(true);
+      };
 
-        var end = (to, target) => {
-          expect(to).toEqual('test6')
-          expect(Rtu.isDOMComponent(target)).toEqual(true);
-          done();
-        };
-
-        events.scrollEvent.register('begin', begin);
-        events.scrollEvent.register('end', end);
-
-        Rtu.Simulate.click(link);
-        
-    });
-
-  });
-
-  it('it calls begin and end event', (done) => {
-
-    render(component, node, () => {
-
-        var link = node.querySelectorAll('a')[2];
-
-        var begin = (to, target) => {
-          expect(to).toEqual('test3');
-          expect(Rtu.isDOMComponent(target)).toEqual(true);
-        };
-
-        var end = (to, target) => {
-          expect(to).toEqual('test3')
-          expect(Rtu.isDOMComponent(target)).toEqual(true);
-        };
-
-        events.scrollEvent.register('begin', begin);
-        events.scrollEvent.register('end', end);
-
-        Rtu.Simulate.click(link);
-
-
-        // wait to actually scroll so it doesn't affect the next test!
-        setTimeout(() => {
-          done();
-        }, scrollDuration * 3);
-    });
-
-  });
-
-  it('calls "end" event on scrollTo', (done) => {
-    render(component, node, () => {
-
-      var end = (to, target, endPosition) => {
-        expect(endPosition).toEqual(100);
+      var end = function end(to, target) {
+        (0, _expect2.default)(to).toEqual('test6');
+        (0, _expect2.default)(_testUtils2.default.isDOMComponent(target)).toEqual(true);
         done();
       };
 
-      events.scrollEvent.register('end', end);
+      _scrollEvents2.default.scrollEvent.register('begin', begin);
+      _scrollEvents2.default.scrollEvent.register('end', end);
 
-      animateScroll.scrollTo(100, scrollDuration);
+      _testUtils2.default.Simulate.click(link);
     });
   });
 
-});
+  it('it calls begin and end event', function (done) {
+
+    (0, _reactDom.render)(component, node, function () {
+
+      var link = node.querySelectorAll('a')[2];
+
+      var begin = function begin(to, target) {
+        (0, _expect2.default)(to).toEqual('test3');
+        (0, _expect2.default)(_testUtils2.default.isDOMComponent(target)).toEqual(true);
+      };
+
+      var end = function end(to, target) {
+        (0, _expect2.default)(to).toEqual('test3');
+        (0, _expect2.default)(_testUtils2.default.isDOMComponent(target)).toEqual(true);
+      };
+
+      _scrollEvents2.default.scrollEvent.register('begin', begin);
+      _scrollEvents2.default.scrollEvent.register('end', end);
+
+      _testUtils2.default.Simulate.click(link);
+
+      // wait to actually scroll so it doesn't affect the next test!
+      setTimeout(function () {
+        done();
+      }, scrollDuration * 3);
+    });
+  });
+
+  it('calls "end" event on scrollTo', function (done) {
+    (0, _reactDom.render)(component, node, function () {
+
+      var end = function end(to, target, endPosition) {
+        (0, _expect2.default)(endPosition).toEqual(100);
+        done();
+      };
+
+      _scrollEvents2.default.scrollEvent.register('end', end);
+
+      _animateScroll2.default.scrollTo(100, scrollDuration);
+    });
+  });
+}); /* React */

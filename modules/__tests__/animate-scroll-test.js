@@ -1,47 +1,102 @@
-import { render, unmountComponentAtNode } from 'react-dom'
-import Rtu from 'react-dom/test-utils'
-import React from 'react'
+'use strict';
 
-import expect from 'expect'
-import animateScroll from '../mixins/animate-scroll';
-import events from '../mixins/scroll-events.js';
+var _reactDom = require('react-dom');
 
-var currentPositionY = function () {
+var _testUtils = require('react-dom/test-utils');
+
+var _testUtils2 = _interopRequireDefault(_testUtils);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _expect = require('expect');
+
+var _expect2 = _interopRequireDefault(_expect);
+
+var _animateScroll = require('../mixins/animate-scroll');
+
+var _animateScroll2 = _interopRequireDefault(_animateScroll);
+
+var _scrollEvents = require('../mixins/scroll-events.js');
+
+var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var currentPositionY = function currentPositionY() {
   var supportPageOffset = window.pageXOffset !== undefined;
-  var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-  return supportPageOffset ? window.pageYOffset : isCSS1Compat ?
-    document.documentElement.scrollTop : document.body.scrollTop;
+  var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
+  return supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
 };
 
-describe('AnimateScroll', () => {
+describe('AnimateScroll', function () {
 
-  let node;
-  let node2;
-  const duration = 10;
-  const waitDuration = duration * 10;
+  var node = void 0;
+  var node2 = void 0;
+  var duration = 10;
+  var waitDuration = duration * 10;
 
-  let tallComponent =
-    <div id="hugeComponent">
-      <a onClick={() => animateScroll.scrollToTop()}>Scroll To Top!</a>
-      <a onClick={() => animateScroll.scrollTo(100)}>Scroll To 100!</a>
-      <a onClick={() => animateScroll.scrollMore(10)}>Scroll More!</a>
-      <div style={{ height: '10000px' }}></div>
-    </div>
+  var tallComponent = _react2.default.createElement(
+    'div',
+    { id: 'hugeComponent' },
+    _react2.default.createElement(
+      'a',
+      { onClick: function onClick() {
+          return _animateScroll2.default.scrollToTop();
+        } },
+      'Scroll To Top!'
+    ),
+    _react2.default.createElement(
+      'a',
+      { onClick: function onClick() {
+          return _animateScroll2.default.scrollTo(100);
+        } },
+      'Scroll To 100!'
+    ),
+    _react2.default.createElement(
+      'a',
+      { onClick: function onClick() {
+          return _animateScroll2.default.scrollMore(10);
+        } },
+      'Scroll More!'
+    ),
+    _react2.default.createElement('div', { style: { height: '10000px' } })
+  );
 
-  let tallComponent2 =
-    <div id="hugeComponent2">
-      <a onClick={() => animateScroll.scrollToTop()}>Scroll To Top!</a>
-      <a onClick={() => animateScroll.scrollTo(100)}>Scroll To 100!</a>
-      <a onClick={() => animateScroll.scrollMore(10)}>Scroll More!</a>
-      <div style={{ height: '10000px' }}></div>
-    </div>
+  var tallComponent2 = _react2.default.createElement(
+    'div',
+    { id: 'hugeComponent2' },
+    _react2.default.createElement(
+      'a',
+      { onClick: function onClick() {
+          return _animateScroll2.default.scrollToTop();
+        } },
+      'Scroll To Top!'
+    ),
+    _react2.default.createElement(
+      'a',
+      { onClick: function onClick() {
+          return _animateScroll2.default.scrollTo(100);
+        } },
+      'Scroll To 100!'
+    ),
+    _react2.default.createElement(
+      'a',
+      { onClick: function onClick() {
+          return _animateScroll2.default.scrollMore(10);
+        } },
+      'Scroll More!'
+    ),
+    _react2.default.createElement('div', { style: { height: '10000px' } })
+  );
 
-  beforeEach(() => {
+  beforeEach(function () {
     node = document.createElement('div');
     node2 = document.createElement('div');
     document.body.appendChild(node);
     document.body.appendChild(node2);
-  })
+  });
 
   afterEach(function () {
     window.scrollTo(0, 0);
@@ -49,146 +104,145 @@ describe('AnimateScroll', () => {
     node2.style.cssText = "";
     document.body.style.cssText = "";
 
-    unmountComponentAtNode(node);
-    unmountComponentAtNode(node2);
+    (0, _reactDom.unmountComponentAtNode)(node);
+    (0, _reactDom.unmountComponentAtNode)(node2);
     document.body.removeChild(node);
     document.body.removeChild(node2);
     document.body.innerHtml = "";
   });
 
-  it('renders a component taller than the window height', () => {
-    render(tallComponent, node, () => {
-      expect(node.offsetHeight > window.innerHeight).toBe(true);
+  it('renders a component taller than the window height', function () {
+    (0, _reactDom.render)(tallComponent, node, function () {
+      (0, _expect2.default)(node.offsetHeight > window.innerHeight).toBe(true);
     });
   });
 
-  it('scrolls to an absolute position', (done) => {
-    render(tallComponent, node, () => {
+  it('scrolls to an absolute position', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
       window.scrollTo(0, 1000);
-      animateScroll.scrollTo(120, { duration: duration });
+      _animateScroll2.default.scrollTo(120, { duration: duration });
 
-      setTimeout(() => {
-        expect(window.scrollY || window.pageYOffset).toEqual(120);
+      setTimeout(function () {
+        (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(120);
         done();
       }, waitDuration);
     });
   });
 
-  it('scrolls to a position given a node as a container ', (done) => {
-    render(tallComponent, node, () => {
+  it('scrolls to a position given a node as a container ', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
 
       window.scrollTo(0, 0);
       node.style.cssText = "position: fixed; top: 0; bottom: 200px; width 100%; overflow: scroll";
       document.body.style.cssText = "overflow: hidden;";
 
-      animateScroll.scrollTo(400, { duration: duration, container: node });
-      setTimeout(() => {
-        expect(node.scrollTop).toEqual(400);
+      _animateScroll2.default.scrollTo(400, { duration: duration, container: node });
+      setTimeout(function () {
+        (0, _expect2.default)(node.scrollTop).toEqual(400);
         done();
       }, waitDuration);
     });
   });
 
-  it('scrolls to an absolute position even if current position is higher', (done) => {
-    render(tallComponent, node, () => {
+  it('scrolls to an absolute position even if current position is higher', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
       window.scrollTo(0, 1000);
-      animateScroll.scrollTo(200, { duration: duration });
+      _animateScroll2.default.scrollTo(200, { duration: duration });
 
-      setTimeout(() => {
-        expect(window.scrollY || window.pageYOffset).toEqual(200);
+      setTimeout(function () {
+        (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(200);
 
         done();
       }, waitDuration);
-
     });
   });
 
-  it('scrolls to top', (done) => {
-    render(tallComponent, node, () => {
+  it('scrolls to top', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
       window.scrollTo(0, 1000);
-      animateScroll.scrollToTop({ duration: duration });
+      _animateScroll2.default.scrollToTop({ duration: duration });
 
-      setTimeout(() => {
-        expect(window.scrollY || window.pageYOffset).toEqual(0);
+      setTimeout(function () {
+        (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(0);
         done();
       }, waitDuration);
     });
   });
 
-  it('scrolls to bottom', (done) => {
-    render(tallComponent, node, () => {
-      animateScroll.scrollToBottom({ duration: duration });
+  it('scrolls to bottom', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
+      _animateScroll2.default.scrollToBottom({ duration: duration });
 
-      setTimeout(() => {
+      setTimeout(function () {
         var offset = 16;
-        expect(window.scrollY || window.pageYOffset).toEqual(node.offsetHeight - window.innerHeight + offset);
+        (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(node.offsetHeight - window.innerHeight + offset);
         done();
       }, waitDuration);
     });
   });
 
-  it('scrolls to a position relative to the current position', (done) => {
-    render(tallComponent, node, () => {
+  it('scrolls to a position relative to the current position', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
       window.scrollTo(0, 111);
 
-      animateScroll.scrollMore(10, { duration: duration });
+      _animateScroll2.default.scrollMore(10, { duration: duration });
 
-      setTimeout(() => {
-        expect(window.scrollY || window.pageYOffset).toEqual(121);
+      setTimeout(function () {
+        (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(121);
 
-        animateScroll.scrollMore(10, { duration: duration });
+        _animateScroll2.default.scrollMore(10, { duration: duration });
 
         // do it again!
-        setTimeout(() => {
-          expect(window.scrollY || window.pageYOffset).toEqual(131);
+        setTimeout(function () {
+          (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(131);
 
           done();
         }, waitDuration);
-
       }, waitDuration);
     });
   });
 
-  it('can take 0 as a duration argument', (done) => {
-    render(tallComponent, node, () => {
-      animateScroll.scrollTo(120, { duration: 0 });
+  it('can take 0 as a duration argument', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
+      _animateScroll2.default.scrollTo(120, { duration: 0 });
 
-      setTimeout(() => {
-        expect(window.scrollY || window.pageYOffset).toEqual(120);
+      setTimeout(function () {
+        (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(120);
         done();
       }, 100);
     });
   });
 
-  it('can take a function as a duration argument', (done) => {
-    render(tallComponent, node, () => {
-      animateScroll.scrollTo(120, { duration: (v) => v });
-      expect(window.scrollY || window.pageYOffset).toEqual(0);
+  it('can take a function as a duration argument', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
+      _animateScroll2.default.scrollTo(120, { duration: function duration(v) {
+          return v;
+        } });
+      (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(0);
 
-      setTimeout(() => {
-        expect(window.scrollY || window.pageYOffset).toEqual(120);
+      setTimeout(function () {
+        (0, _expect2.default)(window.scrollY || window.pageYOffset).toEqual(120);
         done();
       }, 150);
     });
   });
 
-  it('can scroll two DIVs', (done) => {
-    render(tallComponent, node, () => {
-      render(tallComponent2, node2, () => {
+  it('can scroll two DIVs', function (done) {
+    (0, _reactDom.render)(tallComponent, node, function () {
+      (0, _reactDom.render)(tallComponent2, node2, function () {
         window.scrollTo(0, 0);
         node.style.cssText = "position: fixed; top: 0; bottom: 200px; width 100%; overflow: scroll";
         node2.style.cssText = "position: fixed; top: 0; bottom: 200px; width 100%; overflow: scroll";
         document.body.style.cssText = "overflow: hidden;";
 
-        animateScroll.scrollTo(300, { duration: duration, container: node });
-        animateScroll.scrollTo(400, { duration: duration, container: node2 });
-        setTimeout(() => {
-          expect(node.scrollTop).toEqual(300);
-          expect(node2.scrollTop).toEqual(400);
+        _animateScroll2.default.scrollTo(300, { duration: duration, container: node });
+        _animateScroll2.default.scrollTo(400, { duration: duration, container: node2 });
+        setTimeout(function () {
+          (0, _expect2.default)(node.scrollTop).toEqual(300);
+          (0, _expect2.default)(node2.scrollTop).toEqual(400);
           done();
         }, waitDuration);
       });
     });
   });
-
 });

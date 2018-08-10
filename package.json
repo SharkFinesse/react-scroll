@@ -8,8 +8,10 @@
     "url": "git+https://github.com/fisshy/react-scroll.git"
   },
   "scripts": {
-    "examples": "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples",
-    "build": "babel modules -d build/npm/modules --ignore '**/__tests__/**' --plugins transform-class-properties && gulp",
+    "examples":
+      "webpack-dev-server --config examples/webpack.config.js --no-info --content-base examples",
+    "build":
+      "babel modules -d dist --ignore '**/__tests__/**' --plugins transform-class-properties && gulp",
     "clean": "rm -rf build/npm/modules",
     "test": "karma start",
     "start": "npm run examples"
@@ -18,21 +20,10 @@
   "bugs": {
     "url": "https://github.com/fisshy/react-scroll/issues"
   },
-  "authors": [
-    "Joachim Karlsson"
-  ],
+  "authors": ["Joachim Karlsson"],
   "license": "MIT",
-  "tags": [
-    "react",
-    "scroll"
-  ],
-  "keywords": [
-    "react",
-    "react-component",
-    "scroll",
-    "scroller",
-    "scrolls"
-  ],
+  "tags": ["react", "scroll"],
+  "keywords": ["react", "react-component", "scroll", "scroller", "scrolls"],
   "dependencies": {
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.5.8"
@@ -70,13 +61,8 @@
     "react-dom": "^15.5.4 || ^16.0.0"
   },
   "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ],
-    "plugins": [
-      "transform-object-assign"
-    ]
+    "presets": ["es2015", "react"],
+    "plugins": ["transform-object-assign"]
   },
   "directories": {
     "example": "examples"
